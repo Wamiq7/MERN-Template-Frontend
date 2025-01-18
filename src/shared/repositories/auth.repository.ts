@@ -15,15 +15,15 @@ interface IGetPostDetail {
   content: string;
 }
 
-interface IPostRepository {
-  getPostList: () => Promise<IGetPostList>;
+interface IAuthRepository {
+  oauthCallback: () => Promise<void>;
   getPostDetail: (postId: string) => Promise<IGetPostDetail>;
 }
 
-export const postRepository: IPostRepository = {
-  getPostList: async () => {
-    const response: AxiosResponse<IGetPostList> = await axiosInstance.get(
-      "/posts"
+export const authRepository: IAuthRepository = {
+  oauthCallback: async () => {
+    const response: AxiosResponse<void> = await axiosInstance.get(
+      "/api/auth/google/callback"
     );
     return response.data;
   },

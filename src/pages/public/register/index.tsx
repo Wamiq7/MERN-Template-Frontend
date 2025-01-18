@@ -6,7 +6,7 @@ import { ChromeIcon } from "lucide-react";
 
 export default function RegisterPage() {
   return (
-    <div className="mt-10 mx-auto max-w-sm space-y-6">
+    <div className="mt-10 mx-auto max-w-sm space-y-6 px-4">
       <div className="space-y-2 text-center">
         <h1 className="text-3xl font-bold">Register</h1>
         <p className="text-gray-500 dark:text-gray-400">

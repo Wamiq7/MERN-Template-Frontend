@@ -7,8 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Toggle } from "@/components/ui/toggle";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { AlignJustify, Moon, Mountain, Search, Sun } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AlignJustify, Moon, Mountain, Search } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { RootState } from "@/store/store";
+import { setTheme } from "@/store/features/theme/themeSlice";
 
 const navLinks = [
   {
@@ -18,22 +21,30 @@ const navLinks = [
   },
   {
     id: 2,
-    title: "About",
-    url: "/",
+    title: "Term of service",
+    url: "/term-of-service",
   },
   {
     id: 3,
-    title: "Services",
-    url: "/",
+    title: "Privacy policies",
+    url: "/privacy-policy",
   },
   {
     id: 4,
     title: "Contact",
-    url: "/",
+    url: "/contact-us",
   },
 ];
 
 export default function Navbar() {
+  const dispatch = useAppDispatch();
+  const theme = useAppSelector((state: RootState) => state.theme.theme);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    dispatch(setTheme(newTheme));
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white dark:border-gray-800 dark:bg-gray-950">
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
@@ -71,8 +82,16 @@ export default function Navbar() {
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Toggle aria-label="Toggle dark mode" className="rounded-full">
-            <Moon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+          <Toggle
+            aria-label="Toggle dark mode"
+            className="rounded-full"
+            onClick={toggleTheme}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5 text-yellow-500 dark:text-yellow-400" />
+            ) : (
+              <Moon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+            )}
           </Toggle>
           <Sheet>
             <SheetTrigger asChild>

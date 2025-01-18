@@ -9,6 +9,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import App from "./App.tsx";
 import "./index.css";
+import { ThemeProvider } from "./shared/providers/ThemeProvider.tsx";
 
 let persistor = persistStore(store);
 
@@ -18,7 +19,9 @@ createRoot(document.getElementById("root")!).render(
       <PersistGate persistor={persistor}>
         <BrowserRouter>
           <QueryClientProvider client={queryClient}>
-            <App />
+            <ThemeProvider>
+              <App />
+            </ThemeProvider>
           </QueryClientProvider>
         </BrowserRouter>
       </PersistGate>

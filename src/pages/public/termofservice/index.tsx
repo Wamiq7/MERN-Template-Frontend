@@ -1,7 +1,7 @@
 export default function index() {
   return (
-    <div className="py-12 bg-gray-50/90 md:py-24 lg:py-32">
-      <div className="container px-4 md:px-6">
+    <div className="py-12 bg-gray-50/90 md:py-16">
+      <div className="container max-w-6xl mx-auto px-4 md:px-6">
         <div className="mx-auto prose prose-sm/loose lg:prose-lg/loose dark:prose-dark">
           <div className="space-y-4">
             <div className="space-y-2">
