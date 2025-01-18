@@ -1,23 +1,14 @@
 import type { AxiosResponse } from "axios";
 import { axiosInstance } from "../axios/axiosInstance";
 
-interface IGetPostList {
-  posts: Array<{
-    id: string;
-    title: string;
-    content: string;
-  }>;
-}
-
-interface IGetPostDetail {
-  id: string;
-  title: string;
-  content: string;
+export interface IRegister {
+  email: string;
+  password: string;
 }
 
 interface IAuthRepository {
   oauthCallback: () => Promise<void>;
-  getPostDetail: (postId: string) => Promise<IGetPostDetail>;
+  register: (data: IRegister) => Promise<void>;
 }
 
 export const authRepository: IAuthRepository = {
@@ -27,9 +18,13 @@ export const authRepository: IAuthRepository = {
     );
     return response.data;
   },
-  getPostDetail: async (postId: string) => {
-    const response: AxiosResponse<IGetPostDetail> = await axiosInstance.get(
-      `/posts/${postId}`
+  register: async (data: IRegister) => {
+    const response: AxiosResponse<void> = await axiosInstance.post(
+      "/api/auth/signup",
+      {
+        email: data.email,
+        password: data.password,
+      }
     );
     return response.data;
   },

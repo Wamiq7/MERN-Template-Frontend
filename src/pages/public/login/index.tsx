@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { ChromeIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   return (
@@ -40,6 +41,14 @@ export default function LoginPage() {
               Sign in with Google
             </Button>
           </a>
+        </div>
+        <Separator className="my-8" />
+        <div className="space-y-4">
+          <Link to={"/register"}>
+            <Button variant="link" className="w-full">
+              Already have an account ? Sign up
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

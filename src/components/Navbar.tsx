@@ -16,21 +16,16 @@ import { setTheme } from "@/store/features/theme/themeSlice";
 const navLinks = [
   {
     id: 1,
-    title: "Home",
-    url: "/",
-  },
-  {
-    id: 2,
     title: "Term of service",
     url: "/term-of-service",
   },
   {
-    id: 3,
+    id: 2,
     title: "Privacy policies",
     url: "/privacy-policy",
   },
   {
-    id: 4,
+    id: 3,
     title: "Contact",
     url: "/contact-us",
   },
@@ -48,7 +43,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white dark:border-gray-800 dark:bg-gray-950">
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
-        <Link to="#" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <Mountain className="h-6 w-6" />
           <span className="sr-only">React-Vite</span>
         </Link>
