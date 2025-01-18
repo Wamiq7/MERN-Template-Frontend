@@ -34,10 +34,12 @@ export default function LoginPage() {
         </div>
         <Separator className="my-8" />
         <div className="space-y-4">
-          <Button variant="outline" className="w-full">
-            <ChromeIcon className="mr-2 h-4 w-4" />
-            Sign in with Google
-          </Button>
+          <a href={`${import.meta.env.VITE_API_BASE_URL}/api/auth/google`}>
+            <Button variant="outline" className="w-full">
+              <ChromeIcon className="mr-2 h-4 w-4" />
+              Sign in with Google
+            </Button>
+          </a>
         </div>
       </div>
     </div>
