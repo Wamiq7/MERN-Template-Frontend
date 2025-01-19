@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { userRepository } from "../repositories/user.repository";
+import { useQuery } from '@tanstack/react-query';
+import { userRepository } from '../repositories/user.repository';
 
 interface IAuthService {
   userGetAllUsers: () => void;
@@ -8,7 +8,7 @@ interface IAuthService {
 export const userService: IAuthService = {
   userGetAllUsers: () => {
     return useQuery({
-      queryKey: ["getUsersList"],
+      queryKey: ['getUsersList'],
       queryFn: userRepository.getAllUsers,
     });
   },

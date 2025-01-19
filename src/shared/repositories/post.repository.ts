@@ -1,5 +1,5 @@
-import type { AxiosResponse } from "axios";
-import { axiosInstance } from "../axios/axiosInstance";
+import type { AxiosResponse } from 'axios';
+import { axiosInstance } from '../axios/axiosInstance';
 
 interface IGetPostList {
   posts: Array<{
@@ -22,14 +22,11 @@ interface IPostRepository {
 
 export const postRepository: IPostRepository = {
   getPostList: async () => {
-    const response: AxiosResponse<IGetPostList> =
-      await axiosInstance.get("/posts");
+    const response: AxiosResponse<IGetPostList> = await axiosInstance.get('/posts');
     return response.data;
   },
   getPostDetail: async (postId: string) => {
-    const response: AxiosResponse<IGetPostDetail> = await axiosInstance.get(
-      `/posts/${postId}`,
-    );
+    const response: AxiosResponse<IGetPostDetail> = await axiosInstance.get(`/posts/${postId}`);
     return response.data;
   },
 };

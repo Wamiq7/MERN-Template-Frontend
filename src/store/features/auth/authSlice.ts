@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { RootState } from "../../store";
+import { createSlice } from '@reduxjs/toolkit';
+import type { RootState } from '../../store';
 
 interface User {
   id: string;
@@ -24,14 +24,14 @@ const initialState: AuthState = {
 };
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     setCredentials: (state, action) => {
       const { user, accessToken, refreshToken } = action.payload;
       state.user = {
         id: user.id,
-        name: user.name ? user.name : "Anonymous",
+        name: user.name ? user.name : 'Anonymous',
         email: user.email,
         role: user.role,
         selfie: user.selfie,
@@ -56,7 +56,6 @@ export const { setCredentials, updateAccessToken, logout } = authSlice.actions;
 
 export default authSlice.reducer;
 
-export const isUserAuthenticated = (state: RootState) =>
-  state.auth.isAuthenticated;
+export const isUserAuthenticated = (state: RootState) => state.auth.isAuthenticated;
 export const user = (state: RootState) => state.auth.user;
 export const userRole = (state: RootState) => state.auth.user?.role;

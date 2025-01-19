@@ -1,20 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 const footerLinks = [
   {
     id: 1,
-    title: "Term of service",
-    url: "/term-of-service",
+    title: 'Term of service',
+    url: '/term-of-service',
   },
   {
     id: 2,
-    title: "Privacy policies",
-    url: "/privacy-policy",
+    title: 'Privacy policies',
+    url: '/privacy-policy',
   },
   {
     id: 3,
-    title: "Contact",
-    url: "/contact-us",
+    title: 'Contact',
+    url: '/contact-us',
   },
 ];
 
@@ -25,11 +25,7 @@ export default function Footer() {
         <p>&copy; 2024 Example Company. All rights reserved.</p>
         <nav className="flex items-center gap-2">
           {footerLinks.map((item) => (
-            <Link
-              key={item.id}
-              to={item.url}
-              className="text-sm hover:underline"
-            >
+            <Link key={item.id} to={item.url} className="text-sm hover:underline">
               {item.title}
             </Link>
           ))}

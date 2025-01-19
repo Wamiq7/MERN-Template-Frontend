@@ -5,8 +5,7 @@ export default function index() {
         <div className="mb-6">
           <h2 className="mb-2 text-2xl font-bold">Get in Touch</h2>
           <p className="text-muted-foreground">
-            Fill out the form below and we'll get back to you as soon as
-            possible.
+            Fill out the form below and we'll get back to you as soon as possible.
           </p>
         </div>
         <form className="space-y-4">

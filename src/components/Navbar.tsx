@@ -1,33 +1,29 @@
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Toggle } from "@/components/ui/toggle";
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { AlignJustify, Moon, Mountain, Search, Sun } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { RootState } from "@/store/store";
-import { setTheme } from "@/store/features/theme/themeSlice";
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Toggle } from '@/components/ui/toggle';
+import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
+import { AlignJustify, Moon, Mountain, Search, Sun } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { RootState } from '@/store/store';
+import { setTheme } from '@/store/features/theme/themeSlice';
 
 const navLinks = [
   {
     id: 1,
-    title: "Term of service",
-    url: "/term-of-service",
+    title: 'Term of service',
+    url: '/term-of-service',
   },
   {
     id: 2,
-    title: "Privacy policies",
-    url: "/privacy-policy",
+    title: 'Privacy policies',
+    url: '/privacy-policy',
   },
   {
     id: 3,
-    title: "Contact",
-    url: "/contact-us",
+    title: 'Contact',
+    url: '/contact-us',
   },
 ];
 
@@ -36,7 +32,7 @@ export default function Navbar() {
   const theme = useAppSelector((state: RootState) => state.theme.theme);
 
   const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
     dispatch(setTheme(newTheme));
   };
 
@@ -69,20 +65,12 @@ export default function Navbar() {
             <DropdownMenuContent className="w-[300px] p-4">
               <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
-                <Input
-                  type="search"
-                  placeholder="Search..."
-                  className="w-full pl-8"
-                />
+                <Input type="search" placeholder="Search..." className="w-full pl-8" />
               </div>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Toggle
-            aria-label="Toggle dark mode"
-            className="rounded-full"
-            onClick={toggleTheme}
-          >
-            {theme === "dark" ? (
+          <Toggle aria-label="Toggle dark mode" className="rounded-full" onClick={toggleTheme}>
+            {theme === 'dark' ? (
               <Sun className="h-5 w-5 text-yellow-500 dark:text-yellow-400" />
             ) : (
               <Moon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
@@ -90,11 +78,7 @@ export default function Navbar() {
           </Toggle>
           <Sheet>
             <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="rounded-full md:hidden"
-              >
+              <Button variant="ghost" size="icon" className="rounded-full md:hidden">
                 <AlignJustify className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>

@@ -1,15 +1,15 @@
-import { lazy } from "react";
+import { lazy } from 'react';
 
-const NotFoundPage = lazy(() => import("@/pages/common/404"));
-const Users = lazy(() => import("@/pages/private/users"));
+const NotFoundPage = lazy(() => import('@/pages/common/404'));
+const Users = lazy(() => import('@/pages/private/users'));
 
 export const privateRoutes = [
   {
-    path: "/",
+    path: '/',
     element: <Users />,
   },
   {
-    path: "*",
+    path: '*',
     element: <NotFoundPage />,
   },
 ];

@@ -1,10 +1,10 @@
-import { store } from "@/store/store";
-import axios from "axios";
+import { store } from '@/store/store';
+import axios from 'axios';
 
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || "https://api.example.com",
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'https://api.example.com',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
@@ -36,40 +36,35 @@ axiosInstance.interceptors.response.use(
       const refreshToken = auth?.refreshToken; // Get refresh token from auth slice
 
       const host = window.location.host;
-      const arr = host
-        .split(".")
-        .slice(0, host.includes("localhost") ? -1 : -2);
-      const subDomain = arr.length > 0 ? arr[0] : "";
+      const arr = host.split('.').slice(0, host.includes('localhost') ? -1 : -2);
+      const subDomain = arr.length > 0 ? arr[0] : '';
 
-      let url = "api/auth/refresh-token";
+      let url = 'api/auth/refresh-token';
 
-      if (subDomain === "admin") {
-        if (import.meta.env.VITE_API_BASE_URL === "http://localhost:5000") {
-          url = "/api/auth/refresh-token";
+      if (subDomain === 'admin') {
+        if (import.meta.env.VITE_API_BASE_URL === 'http://localhost:5000') {
+          url = '/api/auth/refresh-token';
         } else {
-          url = "api/auth/refresh-token";
+          url = 'api/auth/refresh-token';
         }
       }
 
-      if (subDomain === "vendor") {
-        url = "/api/auth/refresh-token-vendors";
-        if (import.meta.env.VITE_API_BASE_URL === "http://localhost:5000") {
-          url = "/api/auth/refresh-token-vendors";
+      if (subDomain === 'vendor') {
+        url = '/api/auth/refresh-token-vendors';
+        if (import.meta.env.VITE_API_BASE_URL === 'http://localhost:5000') {
+          url = '/api/auth/refresh-token-vendors';
         } else {
-          url = "api/auth/refresh-token-vendors";
+          url = 'api/auth/refresh-token-vendors';
         }
       }
 
       if (refreshToken) {
         try {
-          const response = await axios.post(
-            `${import.meta.env.VITE_API_BASE_URL}${url}`,
-            { refreshToken },
-          );
+          const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}${url}`, { refreshToken });
           const newAccessToken = response.data.accessToken;
           // Update Redux state with new token
           store.dispatch({
-            type: "auth/updateAccessToken",
+            type: 'auth/updateAccessToken',
             payload: newAccessToken,
           });
 
@@ -78,7 +73,7 @@ axiosInstance.interceptors.response.use(
           return axios(originalRequest); // Retry original request
         } catch (error) {
           // Handle token refresh failure
-          store.dispatch({ type: "auth/logout" }); // Example: Logout user
+          store.dispatch({ type: 'auth/logout' }); // Example: Logout user
         }
       }
     }

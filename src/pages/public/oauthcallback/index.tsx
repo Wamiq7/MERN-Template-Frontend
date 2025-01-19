@@ -1,4 +1,4 @@
-import { authService } from "@/shared/services/auth.service";
+import { authService } from '@/shared/services/auth.service';
 
 export default function index() {
   const { data } = authService.useOAuthCallback();

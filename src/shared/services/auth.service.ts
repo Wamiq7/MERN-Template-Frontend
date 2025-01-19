@@ -1,14 +1,10 @@
-import { isUserAuthenticated } from "@/store/features/auth/authSlice";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import {
-  useMutation,
-  UseMutationResult,
-  useQuery,
-} from "@tanstack/react-query";
-import { authRepository } from "../repositories/auth.repository";
-import { useToast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
-import { IApiError } from "../interfaces/services";
+import { isUserAuthenticated } from '@/store/features/auth/authSlice';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useMutation, UseMutationResult, useQuery } from '@tanstack/react-query';
+import { authRepository } from '../repositories/auth.repository';
+import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
+import { IApiError } from '../interfaces/services';
 
 export interface IAuthCredentials {
   email: string;
@@ -56,7 +52,7 @@ export const authService: IAuthService = {
 
   useOAuthCallback: () => {
     return useQuery({
-      queryKey: ["oauthCallback"],
+      queryKey: ['oauthCallback'],
       queryFn: authRepository.oauthCallback,
     });
   },
@@ -69,14 +65,14 @@ export const authService: IAuthService = {
       mutationFn: authRepository.register,
       onSuccess: () => {
         toast({
-          title: "Success",
-          description: "You have been registered successfully",
+          title: 'Success',
+          description: 'You have been registered successfully',
         });
-        navigate("/");
+        navigate('/');
       },
       onError: (error: IApiError) => {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error?.response?.data?.message,
         });
       },
@@ -92,14 +88,14 @@ export const authService: IAuthService = {
       mutationFn: authRepository.login,
       onSuccess: () => {
         toast({
-          title: "Success",
-          description: "Logged in successfully",
+          title: 'Success',
+          description: 'Logged in successfully',
         });
-        navigate("/");
+        navigate('/');
       },
       onError: (error: IApiError) => {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error?.response?.data?.message,
         });
       },
@@ -114,14 +110,14 @@ export const authService: IAuthService = {
       mutationFn: authRepository.verifyOtp,
       onSuccess: () => {
         toast({
-          title: "Success",
-          description: "OTP verified successfully",
+          title: 'Success',
+          description: 'OTP verified successfully',
         });
-        navigate("/");
+        navigate('/');
       },
       onError: (error: IApiError) => {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error?.response?.data?.message,
         });
       },
@@ -135,13 +131,13 @@ export const authService: IAuthService = {
       mutationFn: authRepository.resendOtp,
       onSuccess: () => {
         toast({
-          title: "Success",
-          description: "OTP resent successfully",
+          title: 'Success',
+          description: 'OTP resent successfully',
         });
       },
       onError: (error: IApiError) => {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error?.response?.data?.message,
         });
       },
@@ -155,13 +151,13 @@ export const authService: IAuthService = {
       mutationFn: authRepository.forgotPassword,
       onSuccess: () => {
         toast({
-          title: "Success",
-          description: "Password reset instructions sent to your email",
+          title: 'Success',
+          description: 'Password reset instructions sent to your email',
         });
       },
       onError: (error: IApiError) => {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error?.response?.data?.message,
         });
       },
@@ -176,14 +172,14 @@ export const authService: IAuthService = {
       mutationFn: authRepository.resetPassword,
       onSuccess: () => {
         toast({
-          title: "Success",
-          description: "Password reset successfully",
+          title: 'Success',
+          description: 'Password reset successfully',
         });
-        navigate("/login");
+        navigate('/login');
       },
       onError: (error: IApiError) => {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error?.response?.data?.message,
         });
       },
@@ -197,13 +193,13 @@ export const authService: IAuthService = {
       mutationFn: authRepository.changePassword,
       onSuccess: () => {
         toast({
-          title: "Success",
-          description: "Password changed successfully",
+          title: 'Success',
+          description: 'Password changed successfully',
         });
       },
       onError: (error: IApiError) => {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error?.response?.data?.message,
         });
       },
@@ -217,7 +213,7 @@ export const authService: IAuthService = {
       mutationFn: authRepository.refreshToken,
       onError: (error: IApiError) => {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error?.response?.data?.message,
         });
       },
@@ -232,14 +228,14 @@ export const authService: IAuthService = {
       mutationFn: authRepository.logout,
       onSuccess: () => {
         toast({
-          title: "Success",
-          description: "Logged out successfully",
+          title: 'Success',
+          description: 'Logged out successfully',
         });
-        navigate("/login");
+        navigate('/login');
       },
       onError: (error: IApiError) => {
         toast({
-          title: "Error",
+          title: 'Error',
           description: error?.response?.data?.message,
         });
       },
