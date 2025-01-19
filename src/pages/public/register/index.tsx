@@ -27,7 +27,7 @@ export default function RegisterPage() {
 
   const togglePasswordVisibility = () => setPasswordVisible(!passwordVisible);
 
-  const { mutateAsync: registerUser, isLoading } = authService.useRegister();
+  const { mutateAsync: registerUser, isPending } = authService.useRegister();
 
   const onSubmit = (data: RegisterSchemaType) => {
     const formData = new FormData();
@@ -82,8 +82,8 @@ export default function RegisterPage() {
               {passwordVisible ? "Hide Password" : "Show Password"}
             </button>
           </div>
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? (
+          <Button type="submit" className="w-full" disabled={isPending}>
+            {isPending ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               "Sign Up"
