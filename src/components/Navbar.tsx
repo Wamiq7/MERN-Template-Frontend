@@ -41,7 +41,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white dark:border-gray-800 dark:bg-gray-950">
+    <header className="sticky top-0 z-50 w-full border-b bg-background dark:border-gray-800">
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
         <Link to="/" className="flex items-center gap-2">
           <Mountain className="h-6 w-6" />
@@ -72,7 +72,7 @@ export default function Navbar() {
                 <Input
                   type="search"
                   placeholder="Search..."
-                  className="pl-8 w-full"
+                  className="w-full pl-8"
                 />
               </div>
             </DropdownMenuContent>

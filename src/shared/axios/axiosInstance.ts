@@ -20,7 +20,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 // Response interceptor
@@ -64,7 +64,7 @@ axiosInstance.interceptors.response.use(
         try {
           const response = await axios.post(
             `${import.meta.env.VITE_API_BASE_URL}${url}`,
-            { refreshToken }
+            { refreshToken },
           );
           const newAccessToken = response.data.accessToken;
           // Update Redux state with new token
@@ -83,5 +83,5 @@ axiosInstance.interceptors.response.use(
       }
     }
     return Promise.reject(error);
-  }
+  },
 );

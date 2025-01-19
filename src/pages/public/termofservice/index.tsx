@@ -1,8 +1,8 @@
 export default function index() {
   return (
-    <div className="py-12 bg-gray-50/90 md:py-16">
-      <div className="container max-w-6xl mx-auto px-4 md:px-6">
-        <div className="mx-auto prose prose-sm/loose lg:prose-lg/loose dark:prose-dark">
+    <div className="bg-gray-50/90 py-12 md:py-16">
+      <div className="container mx-auto max-w-6xl px-4 md:px-6">
+        <div className="prose prose-sm/loose lg:prose-lg/loose dark:prose-dark mx-auto">
           <div className="space-y-4">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
@@ -38,7 +38,7 @@ export default function index() {
                   grant of a license, not a transfer of title, and under this
                   license you may not:
                 </p>
-                <ul className="list-disc list-inside">
+                <ul className="list-inside list-disc">
                   <li>modify or copy the materials;</li>
                   <li>
                     use the materials for any commercial purpose, or for any

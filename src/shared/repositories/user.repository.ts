@@ -21,9 +21,8 @@ interface IPostRepository {
 
 export const userRepository: IPostRepository = {
   getAllUsers: async () => {
-    const response: AxiosResponse<IGetPostList> = await axiosInstance.get(
-      "/api/users"
-    );
+    const response: AxiosResponse<IGetPostList> =
+      await axiosInstance.get("/api/users");
     return response.data;
   },
 };

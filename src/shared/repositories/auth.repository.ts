@@ -56,7 +56,7 @@ interface IAuthRepository {
 const makeApiCall = async <T>(
   method: "get" | "post",
   path: string,
-  data?: unknown
+  data?: unknown,
 ): Promise<T> => {
   const response: AxiosResponse<T> = await (method === "get"
     ? axiosInstance.get(path)

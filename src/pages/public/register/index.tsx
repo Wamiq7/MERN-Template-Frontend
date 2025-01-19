@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema, RegisterSchemaType } from "@/shared/schema/register";
 import { useState } from "react";
 import { authService } from "@/shared/services/auth.service";
+import PageWrapper from "@/components/PageWrapper";
 
 export default function RegisterPage() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -41,71 +42,73 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="mt-10 mx-auto max-w-sm space-y-6 px-4">
-      <div className="space-y-2 text-center">
-        <h1 className="text-3xl font-bold">Register</h1>
-        <p className="text-gray-500 dark:text-gray-400">
-          Enter your email and password to sign up.
-        </p>
-      </div>
-      <div>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              required
-              {...register("email")}
-            />
-            {errors.email && (
-              <p className="text-red-500">{errors.email.message}</p>
-            )}
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type={passwordVisible ? "text" : "password"}
-              required
-              {...register("password")}
-            />
-            {errors.password && (
-              <p className="text-red-500">{errors.password.message}</p>
-            )}
-            <button
-              type="button"
-              onClick={togglePasswordVisibility}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              {passwordVisible ? "Hide Password" : "Show Password"}
-            </button>
-          </div>
-          <Button type="submit" className="w-full" disabled={isPending}>
-            {isPending ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              "Sign Up"
-            )}
-          </Button>
-        </form>
-        <Separator className="my-8" />
-        <div className="space-y-4">
-          <Button variant="outline" className="w-full">
-            <ChromeIcon className="mr-2 h-4 w-4" />
-            Sign up with Google
-          </Button>
+    <PageWrapper>
+      <div className="mx-auto max-w-sm space-y-6 px-4">
+        <div className="space-y-2 text-center">
+          <h1 className="text-3xl font-bold">Register</h1>
+          <p className="text-gray-500 dark:text-gray-400">
+            Enter your email and password to sign up.
+          </p>
         </div>
-        <Separator className="my-8" />
-        <div className="space-y-4">
-          <Link to={"/"}>
-            <Button variant="link" className="w-full">
-              Already have an account ? Sign in
+        <div>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="m@example.com"
+                required
+                {...register("email")}
+              />
+              {errors.email && (
+                <p className="text-red-500">{errors.email.message}</p>
+              )}
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type={passwordVisible ? "text" : "password"}
+                required
+                {...register("password")}
+              />
+              {errors.password && (
+                <p className="text-red-500">{errors.password.message}</p>
+              )}
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                {passwordVisible ? "Hide Password" : "Show Password"}
+              </button>
+            </div>
+            <Button type="submit" className="w-full" disabled={isPending}>
+              {isPending ? (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                "Sign Up"
+              )}
             </Button>
-          </Link>
+          </form>
+          <Separator className="my-8" />
+          <div className="space-y-4">
+            <Button variant="outline" className="w-full">
+              <ChromeIcon className="mr-2 h-4 w-4" />
+              Sign up with Google
+            </Button>
+          </div>
+          <Separator className="my-8" />
+          <div className="space-y-4">
+            <Link to={"/"}>
+              <Button variant="link" className="w-full">
+                Already have an account ? Sign in
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }

@@ -6,7 +6,7 @@ export default function PageWrapper({
   children: React.ReactNode;
 }) {
   return (
-    <div className="container mx-auto flex max-w-6xl items-center justify-between p-4 md:p-6">
+    <div className="container mx-auto flex min-h-[calc(100dvh-134px)] max-w-6xl items-center justify-between p-4 md:p-6">
       {children}
     </div>
   );

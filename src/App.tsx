@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Navbar from "./components/Navbar";
 import { AppRoutes } from "./routes";
 import { Toaster } from "./components/ui/toaster";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Toaster />
       <Navbar />
       <AppRoutes />
+      <Footer />
     </Suspense>
   );
 }

@@ -1,7 +1,7 @@
 export default function index() {
   return (
-    <div className="py-12 bg-gray-50/90 md:py-16">
-      <div className="container max-w-6xl mx-auto px-4 md:px-6">
+    <div className="bg-gray-50/90 py-12 md:py-16">
+      <div className="container mx-auto max-w-6xl px-4 md:px-6">
         <div className="space-y-8">
           <div>
             <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
@@ -13,11 +13,11 @@ export default function index() {
           </div>
           <div>
             <h2 className="text-2xl font-bold">Data Collection</h2>
-            <p className="mt-2 ">
+            <p className="mt-2">
               We collect the following types of personal information from our
               users:
             </p>
-            <ul className="mt-4 space-y-2 ">
+            <ul className="mt-4 space-y-2">
               <li>
                 <span className="font-medium">Account Information:</span> Your
                 name, email address, and any other information you provide when
@@ -37,11 +37,11 @@ export default function index() {
           </div>
           <div>
             <h2 className="text-2xl font-bold">Data Usage</h2>
-            <p className="mt-2 ">
+            <p className="mt-2">
               We use the personal information we collect for the following
               purposes:
             </p>
-            <ul className="mt-4 space-y-2 ">
+            <ul className="mt-4 space-y-2">
               <li>
                 <span className="font-medium">Account Management:</span> To
                 create and maintain your user account, and to provide you with
@@ -68,11 +68,11 @@ export default function index() {
           </div>
           <div>
             <h2 className="text-2xl font-bold">Data Sharing</h2>
-            <p className="mt-2 ">
+            <p className="mt-2">
               We may share your personal information with the following third
               parties:
             </p>
-            <ul className="mt-4 space-y-2 ">
+            <ul className="mt-4 space-y-2">
               <li>
                 <span className="font-medium">Service Providers:</span> We may
                 share your information with third-party service providers who
@@ -93,7 +93,7 @@ export default function index() {
           </div>
           <div>
             <h2 className="text-2xl font-bold">Data Security</h2>
-            <p className="mt-2 ">
+            <p className="mt-2">
               We take reasonable measures to protect your personal information
               from unauthorized access, use, or disclosure. This includes using
               encryption, access controls, and other security measures to
@@ -102,11 +102,11 @@ export default function index() {
           </div>
           <div>
             <h2 className="text-2xl font-bold">User Rights</h2>
-            <p className="mt-2 ">
+            <p className="mt-2">
               You have the following rights with respect to your personal
               information:
             </p>
-            <ul className="mt-4 space-y-2 ">
+            <ul className="mt-4 space-y-2">
               <li>
                 <span className="font-medium">Access:</span> You can request
                 access to the personal information we hold about you.
@@ -130,11 +130,11 @@ export default function index() {
           </div>
           <div>
             <h2 className="text-2xl font-bold">Contact Us</h2>
-            <p className="mt-2 ">
+            <p className="mt-2">
               If you have any questions or concerns about our privacy policy,
               please contact us at:
             </p>
-            <p className="mt-2 ">privacy@acme.com</p>
+            <p className="mt-2">privacy@acme.com</p>
           </div>
         </div>
       </div>

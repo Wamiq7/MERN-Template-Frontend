@@ -22,14 +22,13 @@ interface IPostRepository {
 
 export const postRepository: IPostRepository = {
   getPostList: async () => {
-    const response: AxiosResponse<IGetPostList> = await axiosInstance.get(
-      "/posts"
-    );
+    const response: AxiosResponse<IGetPostList> =
+      await axiosInstance.get("/posts");
     return response.data;
   },
   getPostDetail: async (postId: string) => {
     const response: AxiosResponse<IGetPostDetail> = await axiosInstance.get(
-      `/posts/${postId}`
+      `/posts/${postId}`,
     );
     return response.data;
   },
