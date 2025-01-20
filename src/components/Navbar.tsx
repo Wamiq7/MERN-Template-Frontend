@@ -1,4 +1,9 @@
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
 import { Toggle } from '@/components/ui/toggle';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
@@ -70,13 +75,18 @@ export default function Navbar() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <button
-                  onClick={() => {
-                    logout({});
-                  }}
-                >
-                  Logout
-                </button>
+                <DropdownMenuItem>
+                  <Link to={'/profile'}>Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <button
+                    onClick={() => {
+                      logout({});
+                    }}
+                  >
+                    Logout
+                  </button>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )}

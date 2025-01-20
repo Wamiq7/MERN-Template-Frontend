@@ -24,3 +24,10 @@ export const resetPasswordSchema = z
   });
 
 export type ResetPasswordFormValues = z.infer<typeof resetPasswordSchema>;
+
+export const changePasswordSchema = z.object({
+  oldPassword: z.string().min(8, 'Password must be at least 8 characters long'),
+  newPassword: z.string().min(8, 'Password must be at least 8 characters long'),
+});
+
+export type ChangePasswordFormValues = z.infer<typeof changePasswordSchema>;
