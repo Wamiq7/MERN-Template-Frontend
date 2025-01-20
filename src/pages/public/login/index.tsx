@@ -67,10 +67,15 @@ export default function LoginPage() {
               {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Sign In'}
             </Button>
           </form>
+          <Link to={'/forgot-password'}>
+            <Button type="submit" variant={'outline'} className="mt-4 w-full" disabled={isPending}>
+              {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Forgot Password'}
+            </Button>
+          </Link>
           <Separator className="my-8" />
           <div className="space-y-4">
             <a href={`${import.meta.env.VITE_API_BASE_URL}/api/auth/google`}>
-              <Button variant="outline" className="w-full">
+              <Button className="w-full">
                 <ChromeIcon className="mr-2 h-4 w-4" />
                 Sign in with Google
               </Button>

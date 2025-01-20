@@ -8,33 +8,29 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
 import { setTheme } from '@/store/features/theme/themeSlice';
+import { isUserAuthenticated } from '@/store/features/auth/authSlice';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { authService } from '@/shared/services/auth.service';
 
 const navLinks = [
   {
     id: 1,
-    title: 'Term of service',
-    url: '/term-of-service',
-  },
-  {
-    id: 2,
-    title: 'Privacy policies',
-    url: '/privacy-policy',
-  },
-  {
-    id: 3,
-    title: 'Contact',
-    url: '/contact-us',
+    title: 'Home',
+    url: '/',
   },
 ];
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
+  const isAuthenticated = useAppSelector(isUserAuthenticated);
   const theme = useAppSelector((state: RootState) => state.theme.theme);
 
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     dispatch(setTheme(newTheme));
   };
+
+  const { mutateAsync: logout } = authService.useLogout();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background dark:border-gray-800">
@@ -43,17 +39,19 @@ export default function Navbar() {
           <Mountain className="h-6 w-6" />
           <span className="sr-only">React-Vite</span>
         </Link>
-        <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.id}
-              to={link.url}
-              className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            >
-              {link.title}
-            </Link>
-          ))}
-        </nav>
+        {isAuthenticated && (
+          <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
+            {navLinks.map((link) => (
+              <Link
+                key={link.id}
+                to={link.url}
+                className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+              >
+                {link.title}
+              </Link>
+            ))}
+          </nav>
+        )}
         <div className="flex items-center gap-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -76,27 +74,50 @@ export default function Navbar() {
               <Moon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
             )}
           </Toggle>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full md:hidden">
-                <AlignJustify className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-                <span className="sr-only">Toggle navigation menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="md:hidden">
-              <div className="grid gap-4 p-4">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.id}
-                    to={link.url}
-                    className="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-                  >
-                    {link.title}
-                  </Link>
-                ))}
-              </div>
-            </SheetContent>
-          </Sheet>
+          {isAuthenticated && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-full focus-visible:ring-0">
+                  <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-9" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <button
+                  onClick={() => {
+                    logout({});
+                  }}
+                >
+                  Logout
+                </button>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+          {isAuthenticated && (
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="rounded-full md:hidden">
+                  <AlignJustify className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                  <span className="sr-only">Toggle navigation menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="md:hidden">
+                <div className="grid gap-4 p-4">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.id}
+                      to={link.url}
+                      className="text-sm font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    >
+                      {link.title}
+                    </Link>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
+          )}
         </div>
       </div>
     </header>

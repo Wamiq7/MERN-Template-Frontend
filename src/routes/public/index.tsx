@@ -2,6 +2,8 @@ import { lazy } from 'react';
 
 const LoginPage = lazy(() => import('@/pages/public/login'));
 const RegisterPage = lazy(() => import('@/pages/public/register'));
+const ForgotPassword = lazy(() => import('@/pages/public/forgot-password'));
+const ResetPassword = lazy(() => import('@/pages/public/reset-password'));
 const TermOfService = lazy(() => import('@/pages/public/termofservice'));
 const PrivacyPolicy = lazy(() => import('@/pages/public/privacypolicy'));
 const ContactUs = lazy(() => import('@/pages/public/contactus'));
@@ -16,6 +18,14 @@ export const publicRoutes = [
   {
     path: '/register',
     element: <RegisterPage />,
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPassword />,
+  },
+  {
+    path: '/reset-password/:token',
+    element: <ResetPassword />,
   },
   {
     path: '/term-of-service',

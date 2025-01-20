@@ -1,20 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import { axiosInstance } from '../axios/axiosInstance';
 
-// Base API paths
-const AUTH_API_PATHS = {
-  OAUTH_CALLBACK: '/api/auth/google/callback',
-  SIGNUP: '/api/auth/signup',
-  LOGIN: '/api/auth/login',
-  VERIFY_OTP: '/api/auth/verify-otp',
-  RESEND_OTP: '/api/auth/resend-otp',
-  FORGOT_PASSWORD: '/api/auth/forgot-password',
-  RESET_PASSWORD: '/api/auth/reset-password',
-  CHANGE_PASSWORD: '/api/auth/changePassword',
-  REFRESH_TOKEN: '/api/auth/refresh-token',
-  LOGOUT: '/api/auth/logout',
-} as const;
-
 export interface IAuthCredentials {
   email: string;
   password: string;
@@ -40,8 +26,31 @@ export interface IChangePwd {
   newPassword: string;
 }
 
+interface IOAuth {
+  data: {
+    role: string;
+  };
+  tokens: {
+    accessToken: string;
+    refreshToken: string;
+  };
+}
+
+// Base API paths
+const AUTH_API_PATHS = {
+  OAUTH_CALLBACK: '/api/auth/socialAuth',
+  SIGNUP: '/api/auth/signup',
+  LOGIN: '/api/auth/login',
+  VERIFY_OTP: '/api/auth/verify-otp',
+  RESEND_OTP: '/api/auth/resend-otp',
+  FORGOT_PASSWORD: '/api/auth/forgot-password',
+  RESET_PASSWORD: '/api/auth/reset-password',
+  CHANGE_PASSWORD: '/api/auth/changePassword',
+  LOGOUT: '/api/auth/logout',
+} as const;
+
 interface IAuthRepository {
-  oauthCallback: () => Promise<void>;
+  oauthCallback: (token: string) => Promise<IOAuth>;
   register: (data: IAuthCredentials) => Promise<void>;
   login: (data: IAuthCredentials) => Promise<void>;
   verifyOtp: (data: IOtp) => Promise<void>;
@@ -49,8 +58,7 @@ interface IAuthRepository {
   forgotPassword: (email: string) => Promise<void>;
   resetPassword: (data: IResetPwd) => Promise<void>;
   changePassword: (data: IChangePwd) => Promise<void>;
-  refreshToken: (refreshToken: string) => Promise<void>;
-  logout: (data: ILogout) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const makeApiCall = async <T>(method: 'get' | 'post', path: string, data?: unknown): Promise<T> => {
@@ -62,7 +70,7 @@ const makeApiCall = async <T>(method: 'get' | 'post', path: string, data?: unkno
 
 // Auth repository implementation
 export const authRepository: IAuthRepository = {
-  oauthCallback: () => makeApiCall('get', AUTH_API_PATHS.OAUTH_CALLBACK),
+  oauthCallback: (token: string) => makeApiCall<IOAuth>('post', AUTH_API_PATHS.OAUTH_CALLBACK, { token }),
 
   register: (data: IAuthCredentials) =>
     makeApiCall('post', AUTH_API_PATHS.SIGNUP, {
@@ -98,11 +106,5 @@ export const authRepository: IAuthRepository = {
       newPassword: data.newPassword,
     }),
 
-  refreshToken: (refreshToken: string) => makeApiCall('post', AUTH_API_PATHS.REFRESH_TOKEN, { refreshToken }),
-
-  logout: (data: ILogout) =>
-    makeApiCall('post', AUTH_API_PATHS.LOGOUT, {
-      userId: data.userId,
-      refreshToken: data.refreshToken,
-    }),
+  logout: () => makeApiCall<void>('post', AUTH_API_PATHS.LOGOUT),
 };

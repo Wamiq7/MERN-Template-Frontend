@@ -1,6 +1,6 @@
-import { isUserAuthenticated } from '@/store/features/auth/authSlice';
+import { isUserAuthenticated, logout, setCredentials } from '@/store/features/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { useMutation, UseMutationResult, useQuery } from '@tanstack/react-query';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { authRepository } from '../repositories/auth.repository';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,16 @@ import { IApiError } from '../interfaces/services';
 export interface IAuthCredentials {
   email: string;
   password: string;
+}
+
+interface IOAuth {
+  data: {
+    role: string;
+  };
+  tokens: {
+    accessToken: string;
+    refreshToken: string;
+  };
 }
 
 export interface IOtp {
@@ -33,7 +43,7 @@ export interface IChangePwd {
 
 interface IAuthService {
   useAuth: () => boolean;
-  useOAuthCallback: () => ReturnType<typeof useQuery>;
+  useOAuthCallback: () => UseMutationResult<IOAuth, IApiError, string>;
   useRegister: () => UseMutationResult<void, IApiError, IAuthCredentials>;
   useLogin: () => UseMutationResult<void, IApiError, IAuthCredentials>;
   useVerifyOtp: () => UseMutationResult<void, IApiError, IOtp>;
@@ -41,8 +51,7 @@ interface IAuthService {
   useForgotPassword: () => UseMutationResult<void, IApiError, string>;
   useResetPassword: () => UseMutationResult<void, IApiError, IResetPwd>;
   useChangePassword: () => UseMutationResult<void, IApiError, IChangePwd>;
-  useRefreshToken: () => UseMutationResult<void, IApiError, string>;
-  useLogout: () => UseMutationResult<void, IApiError, ILogout>;
+  useLogout: () => UseMutationResult<void, IApiError>;
 }
 
 export const authService: IAuthService = {
@@ -51,9 +60,28 @@ export const authService: IAuthService = {
   },
 
   useOAuthCallback: () => {
-    return useQuery({
-      queryKey: ['oauthCallback'],
-      queryFn: authRepository.oauthCallback,
+    const { toast } = useToast();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    return useMutation({
+      mutationFn: authRepository.oauthCallback,
+      onSuccess: (resp) => {
+        dispatch(
+          setCredentials({
+            role: resp.data.role,
+            accessToken: resp.tokens.accessToken,
+            refreshToken: resp.tokens.refreshToken,
+          }),
+        );
+        navigate('/');
+      },
+      onError: (error: IApiError) => {
+        toast({
+          title: 'Error',
+          description: error?.response?.data?.message,
+        });
+      },
     });
   },
 
@@ -82,7 +110,7 @@ export const authService: IAuthService = {
   useLogin: () => {
     const { toast } = useToast();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
 
     return useMutation({
       mutationFn: authRepository.login,
@@ -206,23 +234,10 @@ export const authService: IAuthService = {
     });
   },
 
-  useRefreshToken: () => {
-    const { toast } = useToast();
-
-    return useMutation({
-      mutationFn: authRepository.refreshToken,
-      onError: (error: IApiError) => {
-        toast({
-          title: 'Error',
-          description: error?.response?.data?.message,
-        });
-      },
-    });
-  },
-
   useLogout: () => {
     const { toast } = useToast();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     return useMutation({
       mutationFn: authRepository.logout,
@@ -231,7 +246,8 @@ export const authService: IAuthService = {
           title: 'Success',
           description: 'Logged out successfully',
         });
-        navigate('/login');
+        dispatch(logout());
+        navigate('/');
       },
       onError: (error: IApiError) => {
         toast({

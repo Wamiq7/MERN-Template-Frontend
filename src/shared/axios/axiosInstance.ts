@@ -1,3 +1,4 @@
+import { toast } from '@/hooks/use-toast';
 import { store } from '@/store/store';
 import axios from 'axios';
 
@@ -13,6 +14,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const { auth } = store.getState(); // Access Redux state
     const accessToken = auth?.accessToken; // Get access token from auth slice
+
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -34,34 +36,16 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       const { auth } = store.getState(); // Access Redux state
       const refreshToken = auth?.refreshToken; // Get refresh token from auth slice
+      // const host = window.location.host;
+      // const arr = host.split('.').slice(0, host.includes('localhost') ? -1 : -2);
+      // const subDomain = arr.length > 0 ? arr[0] : '';
 
-      const host = window.location.host;
-      const arr = host.split('.').slice(0, host.includes('localhost') ? -1 : -2);
-      const subDomain = arr.length > 0 ? arr[0] : '';
-
-      let url = 'api/auth/refresh-token';
-
-      if (subDomain === 'admin') {
-        if (import.meta.env.VITE_API_BASE_URL === 'http://localhost:5000') {
-          url = '/api/auth/refresh-token';
-        } else {
-          url = 'api/auth/refresh-token';
-        }
-      }
-
-      if (subDomain === 'vendor') {
-        url = '/api/auth/refresh-token-vendors';
-        if (import.meta.env.VITE_API_BASE_URL === 'http://localhost:5000') {
-          url = '/api/auth/refresh-token-vendors';
-        } else {
-          url = 'api/auth/refresh-token-vendors';
-        }
-      }
+      const url = '/api/auth/refresh-token';
 
       if (refreshToken) {
         try {
           const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}${url}`, { refreshToken });
-          const newAccessToken = response.data.accessToken;
+          const newAccessToken = response.data.tokens.accessToken;
           // Update Redux state with new token
           store.dispatch({
             type: 'auth/updateAccessToken',
@@ -71,8 +55,9 @@ axiosInstance.interceptors.response.use(
           // Update original request's authorization header
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return axios(originalRequest); // Retry original request
-        } catch (error) {
+        } catch (error: unknown) {
           // Handle token refresh failure
+          toast({ variant: 'destructive', description: `Failed to refresh token. Please log in again. ${error}` });
           store.dispatch({ type: 'auth/logout' }); // Example: Logout user
         }
       }

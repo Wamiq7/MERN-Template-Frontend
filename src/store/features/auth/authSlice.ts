@@ -1,23 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../store';
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string;
-  selfie: string;
-}
-
 interface AuthState {
-  user: User | null;
+  userRole: string | null;
   accessToken: string | null;
   refreshToken: string | null;
   isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {
-  user: null,
+  userRole: null,
   accessToken: null,
   refreshToken: null,
   isAuthenticated: false,
@@ -28,14 +20,8 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setCredentials: (state, action) => {
-      const { user, accessToken, refreshToken } = action.payload;
-      state.user = {
-        id: user.id,
-        name: user.name ? user.name : 'Anonymous',
-        email: user.email,
-        role: user.role,
-        selfie: user.selfie,
-      };
+      const { role, accessToken, refreshToken } = action.payload;
+      state.userRole = role;
       state.accessToken = accessToken;
       state.refreshToken = refreshToken;
       state.isAuthenticated = true;
@@ -44,7 +30,7 @@ export const authSlice = createSlice({
       state.accessToken = action.payload;
     },
     logout: (state) => {
-      state.user = null;
+      state.userRole = null;
       state.accessToken = null;
       state.refreshToken = null;
       state.isAuthenticated = false;
@@ -57,5 +43,5 @@ export const { setCredentials, updateAccessToken, logout } = authSlice.actions;
 export default authSlice.reducer;
 
 export const isUserAuthenticated = (state: RootState) => state.auth.isAuthenticated;
-export const user = (state: RootState) => state.auth.user;
-export const userRole = (state: RootState) => state.auth.user?.role;
+export const user = (state: RootState) => state.auth;
+export const userRole = (state: RootState) => state.auth.userRole;
