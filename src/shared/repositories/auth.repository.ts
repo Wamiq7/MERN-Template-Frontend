@@ -38,15 +38,15 @@ interface IOAuth {
 
 // Base API paths
 const AUTH_API_PATHS = {
-  OAUTH_CALLBACK: '/api/auth/socialAuth',
-  SIGNUP: '/api/auth/signup',
-  LOGIN: '/api/auth/login',
-  VERIFY_OTP: '/api/auth/verify-otp',
-  RESEND_OTP: '/api/auth/resend-otp',
-  FORGOT_PASSWORD: '/api/auth/forgot-password',
-  RESET_PASSWORD: '/api/auth/reset-password',
+  OAUTH_CALLBACK: '/api/auth/socialAuth', // done
+  SIGNUP: '/api/auth/signup', // done 1
+  LOGIN: '/api/auth/login', // done 2
+  VERIFY_OTP: '/api/auth/verify-otp', // 3
+  RESEND_OTP: '/api/auth/resend-otp', // optional
+  FORGOT_PASSWORD: '/api/auth/forgot-password', // done
+  RESET_PASSWORD: '/api/auth/reset-password', // done
   CHANGE_PASSWORD: '/api/auth/changePassword',
-  LOGOUT: '/api/auth/logout',
+  LOGOUT: '/api/auth/logout', // done
 } as const;
 
 interface IAuthRepository {

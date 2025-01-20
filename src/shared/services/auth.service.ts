@@ -121,7 +121,11 @@ export const authService: IAuthService = {
         });
         navigate('/');
       },
-      onError: (error: IApiError) => {
+      onError: (error: IApiError, variables) => {
+        if (error?.response?.data?.message === 'Email is not verified. Please verify your email to proceed.') {
+          navigate(`/verify-otp/${variables.email}`);
+          return;
+        }
         toast({
           title: 'Error',
           description: error?.response?.data?.message,

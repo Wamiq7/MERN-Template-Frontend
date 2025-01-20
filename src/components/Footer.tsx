@@ -21,7 +21,7 @@ const footerLinks = [
 export default function Footer() {
   return (
     <footer className="sticky bottom-0 z-50 w-full border-t bg-background dark:border-gray-800">
-      <div className="container mx-auto flex max-w-6xl items-center justify-between border-t py-6 text-sm text-muted-foreground">
+      <div className="container mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 border-t py-6 text-sm text-muted-foreground md:flex-row">
         <p>&copy; 2024 Example Company. All rights reserved.</p>
         <nav className="flex items-center gap-2">
           {footerLinks.map((item) => (

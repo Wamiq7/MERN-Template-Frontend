@@ -46,7 +46,7 @@ export default function ResetPasswordPage() {
 
   return (
     <PageWrapper>
-      <div className="mx-auto max-w-sm space-y-6 px-4">
+      <div className="mx-auto w-full max-w-sm space-y-6 px-4">
         <h1 className="text-3xl font-bold">Reset Password</h1>
         <div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

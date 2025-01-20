@@ -1,9 +1,8 @@
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent } from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Toggle } from '@/components/ui/toggle';
 import { Sheet, SheetTrigger, SheetContent } from '@/components/ui/sheet';
-import { AlignJustify, Moon, Mountain, Search, Sun } from 'lucide-react';
+import { AlignJustify, Moon, Mountain, Sun } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { RootState } from '@/store/store';
@@ -53,20 +52,6 @@ export default function Navbar() {
           </nav>
         )}
         <div className="flex items-center gap-4">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <Search className="h-5 w-5 text-gray-500 dark:text-gray-400" />
-                <span className="sr-only">Search</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[300px] p-4">
-              <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500 dark:text-gray-400" />
-                <Input type="search" placeholder="Search..." className="w-full pl-8" />
-              </div>
-            </DropdownMenuContent>
-          </DropdownMenu>
           <Toggle aria-label="Toggle dark mode" className="rounded-full" onClick={toggleTheme}>
             {theme === 'dark' ? (
               <Sun className="h-5 w-5 text-yellow-500 dark:text-yellow-400" />
