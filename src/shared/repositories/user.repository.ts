@@ -1,5 +1,8 @@
-import type { AxiosResponse } from 'axios';
-import { axiosInstance } from '../axios/axiosInstance';
+import { makeApiCall } from './utils.repository';
+
+const USER_API_PATHS = {
+  LIST_ALL_USERS: '/api/users',
+} as const;
 
 interface IPagination {
   total: number;
@@ -30,13 +33,20 @@ interface IPostRepository {
 }
 
 export const userRepository: IPostRepository = {
-  getAllUsers: async (page: number = 1, limit: number = 10) => {
-    const response: AxiosResponse<IGetUsers> = await axiosInstance.get('/api/users', {
+  // getAllUsers: async (page: number = 1, limit: number = 10) => {
+  //   const response: AxiosResponse<IGetUsers> = await axiosInstance.get('/api/users', {
+  //     params: {
+  //       page,
+  //       limit,
+  //     },
+  //   });
+  //   return response.data;
+  // },
+  getAllUsers: (page: number = 1, limit: number = 10) =>
+    makeApiCall<IGetUsers>('get', USER_API_PATHS.LIST_ALL_USERS, {
       params: {
         page,
         limit,
       },
-    });
-    return response.data;
-  },
+    }),
 };

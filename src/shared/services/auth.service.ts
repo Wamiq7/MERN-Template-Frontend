@@ -5,52 +5,18 @@ import { authRepository } from '../repositories/auth.repository';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
 import { IApiError } from '../interfaces/services';
-
-export interface IAuthCredentials {
-  email: string;
-  password: string;
-}
-
-interface IOAuth {
-  data: {
-    role: string;
-  };
-  tokens: {
-    accessToken: string;
-    refreshToken: string;
-  };
-}
-
-export interface IOtp {
-  email: string;
-  otp: string;
-}
-
-export interface IResetPwd {
-  token: string;
-  newPassword: string;
-}
-
-export interface ILogout {
-  userId: string;
-  refreshToken: string;
-}
-
-export interface IChangePwd {
-  oldPassword: string;
-  newPassword: string;
-}
+import * as types from '../interfaces/auth-types';
 
 interface IAuthService {
   useAuth: () => boolean;
-  useOAuthCallback: () => UseMutationResult<IOAuth, IApiError, string>;
-  useRegister: () => UseMutationResult<void, IApiError, IAuthCredentials>;
-  useLogin: () => UseMutationResult<void, IApiError, IAuthCredentials>;
-  useVerifyOtp: () => UseMutationResult<void, IApiError, IOtp>;
+  useOAuthCallback: () => UseMutationResult<types.IOAuth, IApiError, string>;
+  useRegister: () => UseMutationResult<void, IApiError, types.IAuthCredentials>;
+  useLogin: () => UseMutationResult<types.IOAuth, IApiError, types.IAuthCredentials>;
+  useVerifyOtp: () => UseMutationResult<types.IOAuth, IApiError, types.IOtp>;
   useResendOtp: () => UseMutationResult<void, IApiError, string>;
   useForgotPassword: () => UseMutationResult<void, IApiError, string>;
-  useResetPassword: () => UseMutationResult<void, IApiError, IResetPwd>;
-  useChangePassword: () => UseMutationResult<void, IApiError, IChangePwd>;
+  useResetPassword: () => UseMutationResult<void, IApiError, types.IResetPwd>;
+  useChangePassword: () => UseMutationResult<void, IApiError, types.IChangePwd>;
   useLogout: () => UseMutationResult<void, IApiError>;
 }
 
@@ -91,12 +57,12 @@ export const authService: IAuthService = {
 
     return useMutation({
       mutationFn: authRepository.register,
-      onSuccess: () => {
+      onSuccess: (_, variables) => {
         toast({
           title: 'Success',
           description: 'You have been registered successfully',
         });
-        navigate('/');
+        navigate(`/verify-otp/${variables.email}`);
       },
       onError: (error: IApiError) => {
         toast({
@@ -110,15 +76,22 @@ export const authService: IAuthService = {
   useLogin: () => {
     const { toast } = useToast();
     const navigate = useNavigate();
-    // const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch();
 
     return useMutation({
       mutationFn: authRepository.login,
-      onSuccess: () => {
+      onSuccess: (resp) => {
         toast({
           title: 'Success',
           description: 'Logged in successfully',
         });
+        dispatch(
+          setCredentials({
+            role: resp.data.role,
+            accessToken: resp.tokens.accessToken,
+            refreshToken: resp.tokens.refreshToken,
+          }),
+        );
         navigate('/');
       },
       onError: (error: IApiError, variables) => {
@@ -137,14 +110,22 @@ export const authService: IAuthService = {
   useVerifyOtp: () => {
     const { toast } = useToast();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     return useMutation({
       mutationFn: authRepository.verifyOtp,
-      onSuccess: () => {
+      onSuccess: (resp) => {
         toast({
           title: 'Success',
           description: 'OTP verified successfully',
         });
+        dispatch(
+          setCredentials({
+            role: resp.data.role,
+            accessToken: resp.tokens.accessToken,
+            refreshToken: resp.tokens.refreshToken,
+          }),
+        );
         navigate('/');
       },
       onError: (error: IApiError) => {
@@ -207,7 +188,7 @@ export const authService: IAuthService = {
           title: 'Success',
           description: 'Password reset successfully',
         });
-        navigate('/login');
+        navigate('/');
       },
       onError: (error: IApiError) => {
         toast({

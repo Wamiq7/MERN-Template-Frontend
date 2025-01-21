@@ -16,6 +16,7 @@ export default function VerifyOtpPage() {
   const [otpValue, setOtpValue] = useState<string>('');
 
   const { mutateAsync: verifyOtp, isPending } = authService.useVerifyOtp();
+  const { mutateAsync: resetOtp } = authService.useResendOtp();
 
   const onSubmit = () => {
     if (!mail) {
@@ -70,6 +71,16 @@ export default function VerifyOtpPage() {
               {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Submit'}
             </Button>
           </form>
+          <button
+            className="rounded-lg py-2 text-base text-blue-700 hover:underline"
+            onClick={() => {
+              if (mail) {
+                resetOtp(mail);
+              }
+            }}
+          >
+            Resend OTP (Expired)
+          </button>
           <Separator className="my-8" />
           <Link to={'/'}>
             <Button variant="link" className="w-full">

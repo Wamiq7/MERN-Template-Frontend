@@ -1,109 +1,78 @@
-import type { AxiosResponse } from 'axios';
-import { axiosInstance } from '../axios/axiosInstance';
-
-export interface IAuthCredentials {
-  email: string;
-  password: string;
-}
-
-export interface IOtp {
-  email: string;
-  otp: string;
-}
-
-export interface IResetPwd {
-  token: string;
-  newPassword: string;
-}
-
-export interface ILogout {
-  userId: string;
-  refreshToken: string;
-}
-
-export interface IChangePwd {
-  oldPassword: string;
-  newPassword: string;
-}
-
-interface IOAuth {
-  data: {
-    role: string;
-  };
-  tokens: {
-    accessToken: string;
-    refreshToken: string;
-  };
-}
+import * as types from '../interfaces/auth-types';
+import { makeApiCall } from './utils.repository';
 
 // Base API paths
 const AUTH_API_PATHS = {
-  OAUTH_CALLBACK: '/api/auth/socialAuth', // done
-  SIGNUP: '/api/auth/signup', // done 1
-  LOGIN: '/api/auth/login', // done 2
-  VERIFY_OTP: '/api/auth/verify-otp', // 3
-  RESEND_OTP: '/api/auth/resend-otp', // optional
-  FORGOT_PASSWORD: '/api/auth/forgot-password', // done
-  RESET_PASSWORD: '/api/auth/reset-password', // done
+  OAUTH_CALLBACK: '/api/auth/socialAuth',
+  SIGNUP: '/api/auth/signup',
+  LOGIN: '/api/auth/login',
+  VERIFY_OTP: '/api/auth/verify-otp',
+  RESEND_OTP: '/api/auth/resend-otp',
+  FORGOT_PASSWORD: '/api/auth/forgot-password',
+  RESET_PASSWORD: '/api/auth/reset-password',
   CHANGE_PASSWORD: '/api/auth/changePassword',
-  LOGOUT: '/api/auth/logout', // done
+  LOGOUT: '/api/auth/logout',
 } as const;
 
 interface IAuthRepository {
-  oauthCallback: (token: string) => Promise<IOAuth>;
-  register: (data: IAuthCredentials) => Promise<void>;
-  login: (data: IAuthCredentials) => Promise<void>;
-  verifyOtp: (data: IOtp) => Promise<void>;
+  oauthCallback: (token: string) => Promise<types.IOAuth>;
+  register: (data: types.IAuthCredentials) => Promise<void>;
+  login: (data: types.IAuthCredentials) => Promise<types.IOAuth>;
+  verifyOtp: (data: types.IOtp) => Promise<types.IOAuth>;
   resendOtp: (email: string) => Promise<void>;
   forgotPassword: (email: string) => Promise<void>;
-  resetPassword: (data: IResetPwd) => Promise<void>;
-  changePassword: (data: IChangePwd) => Promise<void>;
+  resetPassword: (data: types.IResetPwd) => Promise<void>;
+  changePassword: (data: types.IChangePwd) => Promise<void>;
   logout: () => Promise<void>;
 }
 
-const makeApiCall = async <T>(method: 'get' | 'post', path: string, data?: unknown): Promise<T> => {
-  const response: AxiosResponse<T> = await (method === 'get'
-    ? axiosInstance.get(path)
-    : axiosInstance.post(path, data));
-  return response.data;
-};
-
 // Auth repository implementation
 export const authRepository: IAuthRepository = {
-  oauthCallback: (token: string) => makeApiCall<IOAuth>('post', AUTH_API_PATHS.OAUTH_CALLBACK, { token }),
+  oauthCallback: (token: string) =>
+    makeApiCall<types.IOAuth>('post', AUTH_API_PATHS.OAUTH_CALLBACK, { data: { token } }),
 
-  register: (data: IAuthCredentials) =>
+  register: (data: types.IAuthCredentials) =>
     makeApiCall('post', AUTH_API_PATHS.SIGNUP, {
-      email: data.email,
-      password: data.password,
+      data: {
+        email: data.email,
+        password: data.password,
+      },
     }),
 
-  login: (data: IAuthCredentials) =>
+  login: (data: types.IAuthCredentials) =>
     makeApiCall('post', AUTH_API_PATHS.LOGIN, {
-      email: data.email,
-      password: data.password,
+      data: {
+        email: data.email,
+        password: data.password,
+      },
     }),
 
-  verifyOtp: (data: IOtp) =>
+  verifyOtp: (data: types.IOtp) =>
     makeApiCall('post', AUTH_API_PATHS.VERIFY_OTP, {
-      email: data.email,
-      otp: data.otp,
+      data: {
+        email: data.email,
+        otp: data.otp,
+      },
     }),
 
-  resendOtp: (email: string) => makeApiCall('post', AUTH_API_PATHS.RESEND_OTP, { email }),
+  resendOtp: (email: string) => makeApiCall('post', AUTH_API_PATHS.RESEND_OTP, { data: { email } }),
 
-  forgotPassword: (email: string) => makeApiCall('post', AUTH_API_PATHS.FORGOT_PASSWORD, { email }),
+  forgotPassword: (email: string) => makeApiCall('post', AUTH_API_PATHS.FORGOT_PASSWORD, { data: { email } }),
 
-  resetPassword: (data: IResetPwd) =>
+  resetPassword: (data: types.IResetPwd) =>
     makeApiCall('post', AUTH_API_PATHS.RESET_PASSWORD, {
-      token: data.token,
-      newPassword: data.newPassword,
+      data: {
+        token: data.token,
+        newPassword: data.newPassword,
+      },
     }),
 
-  changePassword: (data: IChangePwd) =>
+  changePassword: (data: types.IChangePwd) =>
     makeApiCall('post', AUTH_API_PATHS.CHANGE_PASSWORD, {
-      oldPassword: data.oldPassword,
-      newPassword: data.newPassword,
+      data: {
+        oldPassword: data.oldPassword,
+        newPassword: data.newPassword,
+      },
     }),
 
   logout: () => makeApiCall<void>('post', AUTH_API_PATHS.LOGOUT),

@@ -68,8 +68,8 @@ export default function LoginPage() {
             </Button>
           </form>
           <Link to={'/forgot-password'}>
-            <Button type="submit" variant={'outline'} className="mt-4 w-full" disabled={isPending}>
-              {isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Forgot Password'}
+            <Button type="submit" variant={'outline'} className="mt-4 w-full">
+              Forgot Password
             </Button>
           </Link>
           <Separator className="my-8" />
