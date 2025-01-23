@@ -10,21 +10,24 @@ import { persistStore } from 'redux-persist';
 import App from './App.tsx';
 import './index.css';
 import { ThemeProvider } from './shared/providers/ThemeProvider.tsx';
+import { HelmetProvider } from 'react-helmet-async';
 
 let persistor = persistStore(store);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <BrowserRouter>
-          <QueryClientProvider client={queryClient}>
-            <ThemeProvider>
-              <App />
-            </ThemeProvider>
-          </QueryClientProvider>
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <BrowserRouter>
+            <QueryClientProvider client={queryClient}>
+              <ThemeProvider>
+                <App />
+              </ThemeProvider>
+            </QueryClientProvider>
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
+    </HelmetProvider>
   </StrictMode>,
 );
