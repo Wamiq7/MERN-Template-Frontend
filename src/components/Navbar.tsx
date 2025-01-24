@@ -21,8 +21,8 @@ import { authService } from "@/shared/services/auth.service";
 const navLinks = [
   {
     id: 1,
-    title: "Home",
-    url: "/",
+    title: "Users",
+    url: "/users",
   },
 ];
 

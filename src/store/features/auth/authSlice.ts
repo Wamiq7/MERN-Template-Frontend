@@ -4,14 +4,12 @@ import type { RootState } from "../../store";
 interface AuthState {
   userRole: string | null;
   accessToken: string | null;
-  refreshToken: string | null;
   isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {
   userRole: null,
   accessToken: null,
-  refreshToken: null,
   isAuthenticated: false,
 };
 
@@ -23,7 +21,6 @@ export const authSlice = createSlice({
       const { role, accessToken, refreshToken } = action.payload;
       state.userRole = role;
       state.accessToken = accessToken;
-      state.refreshToken = refreshToken;
       state.isAuthenticated = true;
     },
     updateAccessToken: (state, action) => {
@@ -32,7 +29,6 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.userRole = null;
       state.accessToken = null;
-      state.refreshToken = null;
       state.isAuthenticated = false;
     },
   },
