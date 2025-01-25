@@ -48,6 +48,7 @@ export const authRepository: IAuthRepository = {
         password: data.password,
         clientType: "web",
       },
+      withCredentials: true,
     }),
 
   verifyOtp: (data: types.IOtp) =>

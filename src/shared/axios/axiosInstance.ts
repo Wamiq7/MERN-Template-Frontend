@@ -7,7 +7,6 @@ export const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
 });
 
 // Request interceptor
@@ -49,7 +48,7 @@ axiosInstance.interceptors.response.use(
           {},
           { withCredentials: true }
         );
-        const newAccessToken = response.data.tokens.accessToken;
+        const newAccessToken = response.data.token;
         // Update Redux state with new token
         store.dispatch({
           type: "auth/updateAccessToken",
